@@ -5,50 +5,70 @@
 <title>CBT Attempt Log</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: mock-official performance report, single column, one line chart */
+/* Layout: mock-official rider report under a road-works hazard stripe, single column */
 :root{
-  --bg:#f6f6f3; --surface:#ffffff; --fg:#1b1c1a; --muted:#6b6d66; --line:#e3e3dd;
-  --ink-fail:#c9372c; --ink-two:#d08a12; --ink-three:#2f6fd0; --ink-avg:#1f8a5b; --stamp:#c9372c;
+  --bg:#f3f1ec; --surface:#ffffff; --fg:#191a17; --muted:#686a62; --line:#e2dfd6;
+  --fail:#d23a2c; --fail-soft:#fbe7e3; --avg:#17865a; --avg-soft:#e1f3ea;
+  --hazard:#f2b705; --hazard-dark:#1d1d1b; --stamp:#d23a2c;
   --display:"Barlow Condensed","Arial Narrow",sans-serif;
   --body:"IBM Plex Sans",system-ui,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#141513; --surface:#1c1d1b; --fg:#ecece6; --muted:#9a9c94; --line:#2d2e2b;
-  --ink-fail:#ef6a5e; --ink-two:#e8a63a; --ink-three:#6aa1f0; --ink-avg:#3fb880; --stamp:#ef6a5e; color-scheme:dark}}
+  --bg:#121311; --surface:#1b1c1a; --fg:#eeede6; --muted:#9c9e95; --line:#2c2d2a;
+  --fail:#f06a5c; --fail-soft:#3a1f1b; --avg:#3fbf86; --avg-soft:#15302a;
+  --hazard:#e6ad06; --hazard-dark:#121311; --stamp:#f06a5c; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#141513; --surface:#1c1d1b; --fg:#ecece6; --muted:#9a9c94; --line:#2d2e2b;
-  --ink-fail:#ef6a5e; --ink-two:#e8a63a; --ink-three:#6aa1f0; --ink-avg:#3fb880; --stamp:#ef6a5e; color-scheme:dark}
+  --bg:#121311; --surface:#1b1c1a; --fg:#eeede6; --muted:#9c9e95; --line:#2c2d2a;
+  --fail:#f06a5c; --fail-soft:#3a1f1b; --avg:#3fbf86; --avg-soft:#15302a;
+  --hazard:#e6ad06; --hazard-dark:#121311; --stamp:#f06a5c; color-scheme:dark}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.6}
-.wrap{max-width:720px;margin:0 auto;padding-block:32px 48px;
+.hazard{height:10px;background:repeating-linear-gradient(-45deg,var(--hazard) 0 14px,var(--hazard-dark) 14px 28px);animation:roll 1.6s linear infinite;background-size:39.6px 10px}
+@keyframes roll{to{background-position:39.6px 0}}
+.wrap{max-width:720px;margin:0 auto;padding-block:28px 48px;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
-  display:flex;flex-direction:column;gap:24px}
-header{position:relative}
-.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-h1{font-family:var(--display);font-weight:600;font-size:clamp(34px,8vw,52px);line-height:1;margin:6px 0 4px;text-wrap:balance}
-h1 span{color:var(--ink-fail)}
-.sub{color:var(--muted);margin:0}
-.stamp{display:inline-block;margin-top:14px;font-family:var(--display);font-weight:600;font-size:22px;letter-spacing:.12em;
-  color:var(--stamp);border:3px solid var(--stamp);border-radius:6px;padding:2px 12px;transform:rotate(-4deg);opacity:.85}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
-.stat .k{font-size:13px;color:var(--muted)}
-.stat .v{font-family:var(--display);font-size:30px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1.1}
-.chart{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
-.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:14px;color:var(--fg);margin-bottom:10px}
-.legend i{display:inline-block;width:18px;height:0;border-top:2px solid;vertical-align:middle;margin-right:6px}
-.box{position:relative;height:340px}
-ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;color:var(--muted)}
-ul b{color:var(--fg);font-weight:500}
-.foot{font-family:var(--mono);font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+  display:flex;flex-direction:column;gap:22px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--fail);animation:blink 1.2s steps(2,start) infinite}
+@keyframes blink{50%{opacity:.2}}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(38px,9vw,60px);line-height:.95;margin:8px 0 6px;text-wrap:balance;letter-spacing:-.01em}
+h1 span{color:var(--fail);font-variant-numeric:tabular-nums;display:inline-block}
+.sub{color:var(--muted);margin:0;font-size:16px}
+.stamp{display:inline-block;margin-top:16px;font-family:var(--display);font-weight:700;font-size:24px;letter-spacing:.14em;
+  color:var(--stamp);border:3px double var(--stamp);border-radius:6px;padding:2px 14px;transform:rotate(-5deg);
+  background:color-mix(in srgb,var(--stamp) 8%,transparent);animation:slam .5s cubic-bezier(.2,1.6,.4,1) .9s both}
+@keyframes slam{from{transform:rotate(-14deg) scale(2.2)}to{transform:rotate(-5deg) scale(1)}}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;animation:rise .6s ease-out both}
+.stat:nth-child(2){animation-delay:.08s}.stat:nth-child(3){animation-delay:.16s}.stat:nth-child(4){animation-delay:.24s}
+@keyframes rise{from{transform:translateY(10px)}to{transform:none}}
+.stat .k{font-size:13px;color:var(--muted);line-height:1.35}
+.stat .v{font-family:var(--display);font-size:34px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1;margin-top:4px}
+.stat.money{background:var(--fail-soft);border-color:transparent}
+.stat.money .v{color:var(--fail)}
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 12px 10px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin:0 4px 10px}
+.pill{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;padding:4px 12px;border-radius:999px}
+.pill i{width:10px;height:10px;border-radius:50%}
+.pill.avg{background:var(--avg-soft);color:var(--avg)}.pill.avg i{background:var(--avg)}
+.pill.you{background:var(--fail-soft);color:var(--fail)}.pill.you i{background:var(--fail)}
+.box{position:relative;height:360px}
+.timeline{list-style:none;margin:0;padding:0 0 0 4px;display:flex;flex-direction:column;gap:14px;border-left:2px solid var(--line);margin-left:6px}
+.timeline li{position:relative;padding-left:20px;color:var(--muted)}
+.timeline li::before{content:"";position:absolute;left:-8px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--muted)}
+.timeline li.fail::before{border-color:var(--fail);background:var(--fail)}
+.timeline li.next::before{border-color:var(--fail);border-style:dashed}
+.timeline b{color:var(--fg);font-weight:500}
+@media (prefers-reduced-motion: reduce){*,*::before{animation:none!important}}
 </style>
 
+<div class="hazard" aria-hidden="true"></div>
 <div class="wrap">
   <header>
     <div class="eyebrow">Rider performance review · CB125F · Q3 2026</div>
-    <h1>CBT pass rate: <span>-200%</span></h1>
+    <h1>CBT pass rate: <span id="rate">-200%</span></h1>
     <p class="sub">Mathematically impossible. Achieved anyway.</p>
     <div class="stamp">NOT COMPLETED ×2</div>
   </header>
@@ -56,52 +76,68 @@ ul b{color:var(--fg);font-weight:500}
   <div class="stats">
     <div class="stat"><div class="k">Attempts</div><div class="v">2</div></div>
     <div class="stat"><div class="k">Certificates issued</div><div class="v">0</div></div>
-    <div class="stat"><div class="k">Spent on a bike nobody can ride</div><div class="v">£2,500</div></div>
-    <div class="stat"><div class="k">Gear for riding nowhere</div><div class="v">£300</div></div>
+    <div class="stat money"><div class="k">Spent on a bike nobody can ride</div><div class="v">£2,500</div></div>
+    <div class="stat money"><div class="k">Gear for riding nowhere</div><div class="v">£300</div></div>
   </div>
 
   <div class="chart">
     <div class="legend">
-      <span><i style="border-color:var(--ink-avg);border-top-width:4px"></i>Average learner (smug)</span>
-      <span><i style="border-color:var(--ink-fail);border-top-width:4px"></i>George</span>
+      <span class="pill avg"><i></i>Average learner</span>
+      <span class="pill you"><i></i>George</span>
     </div>
     <div class="box"><canvas id="c" role="img" aria-label="Joke line chart. The average learner jumps from 0 straight to 100 percent on 10 Sept and stays there. George's pass rate falls from 0 percent before the first attempt to minus 100 percent on 10 Sept and minus 200 percent on 30 Sept, with another fail at minus 300 percent projected for the next attempt.">Average learner: 0%, 100%, 100%. George: start 0%, 10 Sept -100%, 30 Sept -200%, next attempt projected -300%.</canvas></div>
   </div>
 
-  <ul>
+  <ul class="timeline">
     <li><b>9 Sept:</b> bought the bike. Before the licence to ride it. Bold strategy.</li>
-    <li><b>10 Sept:</b> attempt one. Never left the training pad.</li>
-    <li><b>30 Sept:</b> attempt two. Pass rate somehow went down again.</li>
-    <li><b>Next attempt:</b> analysts project another fail and a new record low of -300%. The average learner has already gone home.</li>
+    <li class="fail"><b>10 Sept:</b> attempt one. Never left the training pad.</li>
+    <li class="fail"><b>30 Sept:</b> attempt two. Pass rate somehow went down again.</li>
+    <li class="next"><b>Next attempt:</b> analysts project another fail and a new record low of -300%. The average learner has already gone home.</li>
   </ul>
-
-  <div class="foot">Methodology: vibes. A real CBT has no pass rate, you either finish the course or you come back. Data independently unverified by the DVSA, who would like to be left out of this.</div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 (function(){
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-  let chart;
+
+  const rate=document.getElementById('rate');
+  if(!reduce){
+    const t0=performance.now(),dur=1400;
+    (function tick(t){const p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);
+      rate.textContent=Math.round(-200*e)+'%';if(p<1)requestAnimationFrame(tick)})(t0);
+  }
+
+  let chart,done=reduce;
   function draw(){
-    const a=css('--ink-fail'),g=css('--ink-avg'),fg=css('--fg'),mut=css('--muted'),line=css('--line'),surf=css('--surface');
+    const a=css('--fail'),g=css('--avg'),fg=css('--fg'),mut=css('--muted'),line=css('--line'),surf=css('--surface');
     if(chart) chart.destroy();
     const labels={id:'pointLabels',afterDatasetsDraw(ch){
-      const x=ch.ctx;x.save();x.font='600 15px "Barlow Condensed", "Arial Narrow", sans-serif';x.textAlign='center';
+      if(!done) return;
+      const x=ch.ctx;x.save();x.font='700 16px "Barlow Condensed", "Arial Narrow", sans-serif';x.textAlign='center';
       ch.data.datasets.forEach((d,i)=>{
-        ch.getDatasetMeta(i).data.forEach((p,j)=>{x.fillStyle=i?a:g;x.fillText(d.data[j]+'%',p.x,i?p.y+26:p.y-14)})});
+        ch.getDatasetMeta(i).data.forEach((p,j)=>{if(j===0&&i===0)return;x.fillStyle=i?a:g;x.fillText(d.data[j]+'%',p.x,i?p.y+28:p.y-16)})});
       x.restore()}};
+    const dashLast=ctx=>ctx.p1DataIndex===3?[6,6]:undefined;
     chart=new Chart(document.getElementById('c'),{
       type:'line',
       data:{labels:['Before CBT','10 Sept','30 Sept','Next (projected)'],datasets:[
-        {label:'Average learner',data:[0,100,100,100],borderColor:g,backgroundColor:g,borderWidth:4,pointRadius:7,pointBorderColor:surf,pointBorderWidth:2},
-        {label:'George',data:[0,-100,-200,-300],borderColor:a,backgroundColor:a,borderWidth:4,pointRadius:7,pointBorderColor:surf,pointBorderWidth:2}
+        {label:'Average learner',data:[0,100,100,100],borderColor:g,backgroundColor:g+'26',fill:'origin',borderWidth:4,tension:0,
+          pointRadius:7,pointHoverRadius:9,pointBackgroundColor:g,pointBorderColor:surf,pointBorderWidth:3,segment:{borderDash:dashLast}},
+        {label:'George',data:[0,-100,-200,-300],borderColor:a,backgroundColor:a+'26',fill:'origin',borderWidth:4,tension:0,
+          pointRadius:7,pointHoverRadius:9,pointBackgroundColor:a,pointBorderColor:surf,pointBorderWidth:3,segment:{borderDash:dashLast}}
       ]},
       plugins:[labels],
-      options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:24,left:8,right:20}},
-        plugins:{legend:{display:false},tooltip:{callbacks:{label:t=>t.dataset.label+': '+t.raw+'%'}}},
-        scales:{y:{min:-360,max:140,ticks:{color:mut,stepSize:100,font:{size:13},callback:v=>v+'%'},grid:{color:line}},
-                x:{offset:true,ticks:{color:fg,font:{size:14}},grid:{display:false}}}}
+      options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:26,left:4,right:16}},
+        animation:reduce?false:{duration:1100,easing:'easeOutCubic',delay:c=>c.type==='data'?c.dataIndex*260+c.datasetIndex*120:0,
+          onComplete:()=>{if(!done){done=true;chart.draw()}}},
+        animations:reduce?{}:{y:{from:c=>c.chart.scales.y?c.chart.scales.y.getPixelForValue(0):undefined}},
+        plugins:{legend:{display:false},tooltip:{backgroundColor:fg,titleColor:surf,bodyColor:surf,padding:10,cornerRadius:8,displayColors:false,
+          callbacks:{label:t=>t.dataset.label+': '+t.raw+'%'}}},
+        scales:{y:{min:-400,max:200,border:{display:false},ticks:{color:mut,stepSize:100,font:{size:13,family:'IBM Plex Mono'},callback:v=>v+'%'},
+                  grid:{color:c=>c.tick.value===0?mut:line,lineWidth:c=>c.tick.value===0?1.5:1}},
+                x:{offset:true,border:{display:false},ticks:{color:fg,font:{size:14,weight:500}},grid:{display:false}}}}
     });
   }
   draw();
