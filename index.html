@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CBT Attempt Log</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* Layout: mock-official performance report, single column, one line chart */
+:root{
+  --bg:#f6f6f3; --surface:#ffffff; --fg:#1b1c1a; --muted:#6b6d66; --line:#e3e3dd;
+  --ink-fail:#c9372c; --ink-two:#d08a12; --ink-three:#2f6fd0; --ink-avg:#1f8a5b; --stamp:#c9372c;
+  --display:"Barlow Condensed","Arial Narrow",sans-serif;
+  --body:"IBM Plex Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141513; --surface:#1c1d1b; --fg:#ecece6; --muted:#9a9c94; --line:#2d2e2b;
+  --ink-fail:#ef6a5e; --ink-two:#e8a63a; --ink-three:#6aa1f0; --ink-avg:#3fb880; --stamp:#ef6a5e; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141513; --surface:#1c1d1b; --fg:#ecece6; --muted:#9a9c94; --line:#2d2e2b;
+  --ink-fail:#ef6a5e; --ink-two:#e8a63a; --ink-three:#6aa1f0; --ink-avg:#3fb880; --stamp:#ef6a5e; color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.6}
+.wrap{max-width:720px;margin:0 auto;padding-block:32px 48px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  display:flex;flex-direction:column;gap:24px}
+header{position:relative}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(34px,8vw,52px);line-height:1;margin:6px 0 4px;text-wrap:balance}
+h1 span{color:var(--ink-fail)}
+.sub{color:var(--muted);margin:0}
+.stamp{display:inline-block;margin-top:14px;font-family:var(--display);font-weight:600;font-size:22px;letter-spacing:.12em;
+  color:var(--stamp);border:3px solid var(--stamp);border-radius:6px;padding:2px 12px;transform:rotate(-4deg);opacity:.85}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.stat .k{font-size:13px;color:var(--muted)}
+.stat .v{font-family:var(--display);font-size:30px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1.1}
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:14px;color:var(--fg);margin-bottom:10px}
+.legend i{display:inline-block;width:18px;height:0;border-top:2px solid;vertical-align:middle;margin-right:6px}
+.box{position:relative;height:340px}
+ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;color:var(--muted)}
+ul b{color:var(--fg);font-weight:500}
+.foot{font-family:var(--mono);font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Rider performance review · CB125F · Q3 2026</div>
+    <h1>CBT pass rate: <span>-200%</span></h1>
+    <p class="sub">Mathematically impossible. Achieved anyway.</p>
+    <div class="stamp">NOT COMPLETED ×2</div>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><div class="k">Attempts</div><div class="v">2</div></div>
+    <div class="stat"><div class="k">Certificates issued</div><div class="v">0</div></div>
+    <div class="stat"><div class="k">Spent on a bike nobody can ride</div><div class="v">£2,500</div></div>
+    <div class="stat"><div class="k">Gear for riding nowhere</div><div class="v">£300</div></div>
+  </div>
+
+  <div class="chart">
+    <div class="legend">
+      <span><i style="border-color:var(--ink-avg);border-top-width:4px"></i>Average learner (smug)</span>
+      <span><i style="border-color:var(--ink-fail);border-top-width:4px"></i>George</span>
+    </div>
+    <div class="box"><canvas id="c" role="img" aria-label="Joke line chart. The average learner jumps from 0 straight to 100 percent on 10 Sept and stays there. George's pass rate falls from 0 percent before the first attempt to minus 100 percent on 10 Sept and minus 200 percent on 30 Sept, with another fail at minus 300 percent projected for the next attempt.">Average learner: 0%, 100%, 100%. George: start 0%, 10 Sept -100%, 30 Sept -200%, next attempt projected -300%.</canvas></div>
+  </div>
+
+  <ul>
+    <li><b>9 Sept:</b> bought the bike. Before the licence to ride it. Bold strategy.</li>
+    <li><b>10 Sept:</b> attempt one. Never left the training pad.</li>
+    <li><b>30 Sept:</b> attempt two. Pass rate somehow went down again.</li>
+    <li><b>Next attempt:</b> analysts project another fail and a new record low of -300%. The average learner has already gone home.</li>
+  </ul>
+
+  <div class="foot">Methodology: vibes. A real CBT has no pass rate, you either finish the course or you come back. Data independently unverified by the DVSA, who would like to be left out of this.</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+(function(){
+  const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  let chart;
+  function draw(){
+    const a=css('--ink-fail'),g=css('--ink-avg'),fg=css('--fg'),mut=css('--muted'),line=css('--line'),surf=css('--surface');
+    if(chart) chart.destroy();
+    const labels={id:'pointLabels',afterDatasetsDraw(ch){
+      const x=ch.ctx;x.save();x.font='600 15px "Barlow Condensed", "Arial Narrow", sans-serif';x.textAlign='center';
+      ch.data.datasets.forEach((d,i)=>{
+        ch.getDatasetMeta(i).data.forEach((p,j)=>{x.fillStyle=i?a:g;x.fillText(d.data[j]+'%',p.x,i?p.y+26:p.y-14)})});
+      x.restore()}};
+    chart=new Chart(document.getElementById('c'),{
+      type:'line',
+      data:{labels:['Before CBT','10 Sept','30 Sept','Next (projected)'],datasets:[
+        {label:'Average learner',data:[0,100,100,100],borderColor:g,backgroundColor:g,borderWidth:4,pointRadius:7,pointBorderColor:surf,pointBorderWidth:2},
+        {label:'George',data:[0,-100,-200,-300],borderColor:a,backgroundColor:a,borderWidth:4,pointRadius:7,pointBorderColor:surf,pointBorderWidth:2}
+      ]},
+      plugins:[labels],
+      options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:24,left:8,right:20}},
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:t=>t.dataset.label+': '+t.raw+'%'}}},
+        scales:{y:{min:-360,max:140,ticks:{color:mut,stepSize:100,font:{size:13},callback:v=>v+'%'},grid:{color:line}},
+                x:{offset:true,ticks:{color:fg,font:{size:14}},grid:{display:false}}}}
+    });
+  }
+  draw();
+  try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw)}catch(e){}
+  try{new MutationObserver(draw).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']})}catch(e){}
+})();
+</script>
+</html>
